@@ -33,26 +33,21 @@ const pageConfig = [
     },
 ]
 
-function renderRow(elTable, type, env, href) {
+function renderRow(elList, name, href) {
     if (!href) return
-    const elRow = document.createElement('tr')
-    const elType = document.createElement('td')
-    const elEnv = document.createElement('td')
+    const elItem = document.createElement('li')
     const elAnchor = document.createElement('a')
-    elType.innerText = type
-    elAnchor.innerText = env
+    elAnchor.innerText = name
     elAnchor.href = href
-    elEnv.appendChild(elAnchor)
-    elRow.appendChild(elType)
-    elRow.appendChild(elEnv)
-    elTable.appendChild(elRow)
+    elItem.appendChild(elAnchor)
+    elList.appendChild(elItem)
 }
 
 function renderTableRows() {
     const table = document.getElementById('index')
     pageConfig.forEach((page) => {
         page.tests?.forEach((test) => {
-            renderRow(table, `${page.type} - ${test.name}`, test.env, test.url)
+            renderRow(table, `${page.type} - ${test.name} - ${test.env}`, test.url)
         })
     })
 }
