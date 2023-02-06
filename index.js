@@ -32,7 +32,6 @@ const pageConfig = [
 ]
 
 function renderRow(elList, name, href) {
-    if (!href) return
     const elItem = document.createElement('li')
     const elAnchor = document.createElement('a')
     elAnchor.innerText = name
