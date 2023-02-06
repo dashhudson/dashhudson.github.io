@@ -1,32 +1,35 @@
+const env = { dev: 'DEV', prod: 'PROD' }
+
 const pageConfig = [
     {
         type: 'LikeShop Embed',
-        dev: '',
-        prod: '',
+        tests: [],
     },
     {
         type: 'LikeShop Carousel',
-        dev: '',
-        prod: '',
+        tests: [],
     },
     {
         type: 'Gallery Embed',
-        dev: '',
-        prod: '',
+        tests: [],
     },
     {
         type: 'Gallery Carousel',
-        dev: '/spirit-galleries/gallery-carousel/dev.html',
-        devOverride: '/spirit-galleries/gallery-carousel/dev-override.html',
-        prod: '/spirit-galleries/gallery-carousel/prod.html',
-        prodOverride: '/spirit-galleries/gallery-carousel/prod-override.html',
+        tests: [
+            { name: 'Base', env: env.dev, url: '/spirit-galleries/gallery-carousel/dev.html'},
+            { name: 'Override', env: env.dev, url: '/spirit-galleries/gallery-carousel/dev-override.html'},
+            { name: 'Base', env: env.prod, url: '/spirit-galleries/gallery-carousel/prod.html'},
+            { name: 'Override', env: env.prod, url: '/spirit-galleries/gallery-carousel/prod-override.html'},
+        ],
     },
     {
         type: 'Product Carousel',
-        dev: '/spirit-galleries/product-carousel/dev.html',
-        devOverride:  '/spirit-galleries/product-carousel/dev-override.html',
-        prod: '/spirit-galleries/product-carousel/prod.html',
-        prodOverride: '/spirit-galleries/product-carousel/prod-override.html',
+        tests: [
+            { name: 'Base', env: env.dev, url: '/spirit-galleries/product-carousel/dev.htm'},
+            { name: 'Override', env: env.dev, url: '/spirit-galleries/product-carousel/dev-override.html'},
+            { name: 'Base', env: env.prod, url: '/spirit-galleries/product-carousel/prod.html'},
+            { name: 'Override', env: env.prod, url: '/spirit-galleries/product-carousel/prod-override.html'},
+        ],
     },
 ]
 
@@ -48,10 +51,9 @@ function renderRow(elTable, type, env, href) {
 function renderTableRows() {
     const table = document.getElementById('index')
     pageConfig.forEach((page) => {
-        renderRow(table, page.type, 'DEV', page.dev)
-        renderRow(table, `${page.type} Override`, 'DEV', page.devOverride)
-        renderRow(table, page.type, 'PROD', page.prod)
-        renderRow(table, `${page.type} Override`, 'DEV', page.prodOverride)
+        page.tests?.forEach((test) => {
+            renderRow(table, `${page.type} - ${test.name}`, test.env, test.url)
+        })
     })
 }
 
